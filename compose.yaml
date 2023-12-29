@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=kaya_db'
+      - 'POSTGRES_PASSWORD=paulo123'
+      - 'POSTGRES_USER=kayaU'
+    ports:
+      - '5432'
+  pgadmin:
+    image: 'dpage/pgadmin4:latest'
+    environment:
+      PGADMIN_DEFAULT_EMAIL: katine.toure95@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: 84564953kat@
+      PGADMIN_LISTEN_PORT: 5056
+    ports:
+      - '5056:5056'
+
