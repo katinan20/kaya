@@ -27,6 +27,16 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!--dependence swagger-->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+
+
+
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -54,13 +64,13 @@
         </dependency>
 
 
-        <dependency>
+        <!--<dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
             <version>5.0.0</version>
             <scope>provided</scope>
         </dependency>
-
+-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -78,6 +88,12 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>6.1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.5.20</version>
         </dependency>
 
     </dependencies>

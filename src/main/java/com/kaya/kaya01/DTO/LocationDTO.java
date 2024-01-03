@@ -15,6 +15,8 @@ public class LocationDTO  {
 
     private Integer id;
 
+    private String codeLocat;
+
     private Instant dateEntre;
 
     private Instant dateSortie;
@@ -41,6 +43,7 @@ public class LocationDTO  {
 
         return LocationDTO.builder()
                 .id(location.getId())
+                .codeLocat(location.getCodeLocat())
                 .dateEntre(location.getDateEntre())
                 .dateSortie(location.getDateSortie())
                 .dateReservation(location.getDateReservation())
@@ -57,6 +60,7 @@ public class LocationDTO  {
         Location location = new Location();
 
         location.setId(locationDTO.getId());
+        location.setCodeLocat(locationDTO.getCodeLocat());
         location.setDateEntre(locationDTO.getDateEntre());
         location.setDateSortie(locationDTO.getDateSortie());
         location.setDateReservation(locationDTO.getDateReservation());
@@ -66,6 +70,5 @@ public class LocationDTO  {
 
         return location;
     }
-
 
 }

@@ -18,6 +18,9 @@ import java.util.List;
 @Table(name = "location")
 public class Location extends AbstractEntity {
 
+    @Column(name = "codeLocat")
+    private String codeLocat;
+
     @Column(name = "dateEntre")
     private Instant dateEntre;
 
