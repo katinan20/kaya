@@ -42,7 +42,7 @@ public class SearchDTO {
                 .build();
     }
 
-    public static Search fromEntity(SearchDTO searchDTO){
+    public static Search toEntity(SearchDTO searchDTO){
         if (searchDTO == null){
             return null;
         }

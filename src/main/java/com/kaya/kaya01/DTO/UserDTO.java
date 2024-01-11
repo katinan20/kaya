@@ -1,15 +1,15 @@
 package com.kaya.kaya01.DTO;
 
-import com.kaya.kaya01.Entity.Location;
 import com.kaya.kaya01.Entity.User;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Data
 @Builder
-@Data@Value // Use @Value for immutability
 public class UserDTO {
 
     private Integer id;
@@ -38,7 +38,7 @@ public class UserDTO {
                 .password(user.getPassword())
                 .phoneNumber(user.getPhoneNumber())
                 .search(SearchDTO.fromEntity(user.getSearch()))
-                .locations(Collections.singletonList(LocationDTO.fromEntity((Location) user.getLocations())))
+                .locations(user.getLocations().stream().map(LocationDTO::fromEntity).collect(Collectors.toList()))
                 .build();
     }
 
@@ -48,13 +48,16 @@ public class UserDTO {
         }
 
         User user = new User();
-
         user.setId(userDTO.getId());
         user.setCode(userDTO.getCode());
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
         user.setAdresse(AdressesDTO.toEntity(userDTO.getAdressesDTO()));
-        user.setLocations(Collections.singletonList(LocationDTO.toEntity((LocationDTO) userDTO.getLocations())));
+        user.setDateNaissance(userDTO.getDateNaissance());
+        user.setPassword(userDTO.getPassword());
+        user.setPhoneNumber(userDTO.getPhoneNumber());
+        user.setSearch(SearchDTO.toEntity(userDTO.getSearch()));
+        user.setLocations(userDTO.getLocations().stream().map(LocationDTO::toEntity).collect(Collectors.toList()));
 
         return user;
     }

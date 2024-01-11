@@ -33,7 +33,6 @@ public class TransactionDTO {
                 .build();
     }
 
-
     public static Transaction toEntity(TransactionDTO transactionDTO){
         if (transactionDTO == null){
             return null;

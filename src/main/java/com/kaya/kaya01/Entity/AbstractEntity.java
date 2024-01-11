@@ -8,11 +8,12 @@ import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 @MappedSuperclass
 @Data
-public class AbstractEntity {
+public class AbstractEntity implements Serializable {
     @Id
     @GeneratedValue
     private Integer id;

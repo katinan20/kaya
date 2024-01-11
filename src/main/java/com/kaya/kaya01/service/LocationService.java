@@ -10,6 +10,6 @@ public interface LocationService {
     LocationDTO findLocationById(Integer id);
     LocationDTO findLocationByCode(String code);
     List<LocationDTO> findAllLocation();
-    void  deleteUser(Integer id);
+    void  deleteLocation(Integer id);
 
 }

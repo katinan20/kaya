@@ -35,12 +35,10 @@ public class LocationDTO  {
 
     private PropertyDTO property;
 
-
     public static LocationDTO fromEntity(Location location){
         if (location == null){
             return null;
         }
-
         return LocationDTO.builder()
                 .id(location.getId())
                 .codeLocat(location.getCodeLocat())
