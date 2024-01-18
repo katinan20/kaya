@@ -51,5 +51,4 @@ public class Property  extends AbstractEntity{
     @OneToMany(mappedBy = "property")
     private List<Photos> photosList;
 
-
 }

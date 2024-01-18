@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
                 license = @License(
                         name = "Pas de licence pour l'instant"
                 ),
-                version = "V1"
+                version = "0.3.1"
         )
 )
 @Configuration

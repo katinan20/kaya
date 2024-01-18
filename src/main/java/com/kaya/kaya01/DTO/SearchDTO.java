@@ -1,5 +1,6 @@
 package com.kaya.kaya01.DTO;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kaya.kaya01.Entity.Search;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,6 +28,22 @@ public class SearchDTO {
     private Integer nomberOfRoome;
 
     private List<UserDTO> user;
+
+    public SearchDTO(@JsonProperty("id")Integer id,
+                     @JsonProperty("location")String location,
+                     @JsonProperty("priceRangMin")BigDecimal priceRangMin,
+                     @JsonProperty("priceRangMax")BigDecimal priceRangMax,
+                     @JsonProperty("typeTrans")String typeTrans,
+                     @JsonProperty("nomberOfRoome")Integer nomberOfRoome,
+                     @JsonProperty("user")List<UserDTO> user) {
+        this.id = id;
+        this.location = location;
+        this.priceRangMin = priceRangMin;
+        this.priceRangMax = priceRangMax;
+        this.typeTrans = typeTrans;
+        this.nomberOfRoome = nomberOfRoome;
+        this.user = user;
+    }
 
     public static SearchDTO fromEntity(Search search){
         if (search == null){

@@ -75,7 +75,7 @@ public class UserServiceIpm implements UserService {
         userToUpdate.setEmail(userDTO.getEmail());
         userToUpdate.setDateNaissance(userDTO.getDateNaissance());
         userToUpdate.setPhoneNumber(userDTO.getPhoneNumber());
-        userToUpdate.setAdresse(AdressesDTO.toEntity(userDTO.getAdressesDTO()));
+       // userToUpdate.setAdresse(AdressesDTO.toEntity(userDTO.getAdressesDTO()));
 
         // Sauvegarder l'utilisateur mis à jour
         User updatedUser = userRepository.save(userToUpdate);
