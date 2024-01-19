@@ -2,27 +2,19 @@ package com.kaya.kaya01.service.serviceImp;
 
 import com.kaya.kaya01.DTO.LocationDTO;
 import com.kaya.kaya01.Entity.Location;
-import com.kaya.kaya01.Entity.Property;
-import com.kaya.kaya01.Entity.Transaction;
-import com.kaya.kaya01.Entity.User;
 import com.kaya.kaya01.exception.EntityNotFoundException;
 import com.kaya.kaya01.exception.ErrorCodes;
 import com.kaya.kaya01.exception.InvalideEntityException;
 import com.kaya.kaya01.repository.LocationRepository;
 import com.kaya.kaya01.repository.PropertyRepository;
-import com.kaya.kaya01.repository.TransactionRepository;
 import com.kaya.kaya01.repository.UserRepository;
 import com.kaya.kaya01.service.LocationService;
 import com.kaya.kaya01.validator.LocationValidator;
-import com.kaya.kaya01.validator.UserValidator;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -53,36 +45,11 @@ public class LocationServiceImp implements LocationService {
             throw new InvalideEntityException("location non valide", ErrorCodes.LOCATION_NOT_FOUND, errors);
         }
 
-        //veririfier si l'utilisateur existe dans la base de donné
-        Optional<User> user = userRepository.findById(locationDTO.getUser().getId());
-        if (user.isEmpty()){
-            log.error("Aucun utilisateur avec l'ID {}",locationDTO.getUser().getId());
-            throw new EntityNotFoundException(
-                    "l'utilisateur avec l ID " +locationDTO.getUser().getId()+ "n'existe pas dans la base de donnée",
-                    ErrorCodes.USER_NOT_FOUND
-            );
+        //verification de l'existance
+       /* if(locationRepository.findLocationByTypeLocation(locationDTO.getTypeLocation())){
+
         }
-
-        // verifier si la proprieté existe
-        Optional<Property> property = propertyRepository.findById(locationDTO.getProperty().getId());
-        if (property.isEmpty()){
-            log.error("");
-            throw new EntityNotFoundException("la properté n'existe pas dans la base de donnée",
-                    ErrorCodes.PROPRIETE_NOT_FOUND);
-        }
-
-        List<String> errorTransation = new ArrayList<>();
-
-        if (locationDTO.getTransactionList() == null){
-           // locationDTO.getTransactionList().forEach(trans->{});
-             errorTransation.add("la transaction est null");
-        }
-
-        if (!errorTransation.isEmpty()){
-            log.warn("");
-            throw new InvalideEntityException("la transaction n'existe pas dans la base de donnée");
-        }
-
+*/
         //Enregistrer la location
         //Location location = locationRepository.save(LocationDTO.toEntity(locationDTO));
         return LocationDTO.fromEntity(

@@ -2,31 +2,29 @@ package com.kaya.kaya01.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kaya.kaya01.Entity.Adresses;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
 @Data
 @Builder
 public class AdressesDTO {
+    @JsonProperty("adresse")
+    private String adresse;
 
-    private String adresse1;
-
-    private String adresse2;
-
+    @JsonProperty("ville")
     private String ville;
 
+    @JsonProperty("codePostal")
     private String codePostal;
 
+    @JsonProperty("pays")
     private String pays;
 
-    public AdressesDTO(@JsonProperty("adresse1")String adresse1,
-                       @JsonProperty("adresse2")String adresse2,
-                       @JsonProperty("ville")String ville,
-                       @JsonProperty("codePostal")String codePostal,
-                       @JsonProperty("pays")String pays) {
-        this.adresse1 = adresse1;
-        this.adresse2 = adresse2;
+    public AdressesDTO(String adresse,
+                       String ville,
+                       String codePostal,
+                       String pays) {
+        this.adresse = adresse;
         this.ville = ville;
         this.codePostal = codePostal;
         this.pays = pays;
@@ -37,8 +35,7 @@ public class AdressesDTO {
             return null;
         }
         return AdressesDTO.builder()
-                .adresse1(adresses.getAdresse1())
-                .adresse2(adresses.getAdresse2())
+                .adresse(adresses.getAdresse())
                 .ville(adresses.getVille())
                 .codePostal(adresses.getCodePostal())
                 .pays(adresses.getPays())
@@ -52,8 +49,7 @@ public class AdressesDTO {
 
         Adresses adresses = new Adresses();
 
-        adresses.setAdresse1(adressesDTO.getAdresse1());
-        adresses.setAdresse2(adressesDTO.getAdresse2());
+        adresses.setAdresse(adressesDTO.getAdresse());
         adresses.setPays(adressesDTO.getPays());
         adresses.setVille(adressesDTO.getVille());
         adresses.setCodePostal(adressesDTO.getCodePostal());

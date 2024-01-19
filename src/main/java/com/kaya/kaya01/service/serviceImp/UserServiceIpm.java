@@ -41,6 +41,17 @@ public class UserServiceIpm implements UserService {
                     errors
             );
         }
+
+        // Vérification de l'existence de l'utilisateur
+        if (userRepository.findByNameAndEmailAndPhoneNumber(
+                userDTO.getName(), userDTO.getEmail(), userDTO.getPhoneNumber()).isPresent()) {
+            log.error("Un utilisateur avec le nom {}, l'email {} et le numéro de téléphone {} existe déjà",
+                    userDTO.getName(), userDTO.getEmail(), userDTO.getPhoneNumber());
+            throw new EntityNotFoundException(
+                    "Un utilisateur avec ces informations existe déjà",
+                    ErrorCodes.USER_NOT_FOUND
+            );
+        }
         return UserDTO.fromEntity(
                 userRepository.save(
                         UserDTO.toEntity(userDTO)
@@ -75,7 +86,7 @@ public class UserServiceIpm implements UserService {
         userToUpdate.setEmail(userDTO.getEmail());
         userToUpdate.setDateNaissance(userDTO.getDateNaissance());
         userToUpdate.setPhoneNumber(userDTO.getPhoneNumber());
-       // userToUpdate.setAdresse(AdressesDTO.toEntity(userDTO.getAdressesDTO()));
+        userToUpdate.setAdresse(AdressesDTO.toEntity(userDTO.getAdressesDTO()));
 
         // Sauvegarder l'utilisateur mis à jour
         User updatedUser = userRepository.save(userToUpdate);

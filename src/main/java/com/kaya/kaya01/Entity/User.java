@@ -18,7 +18,7 @@ public class User  extends AbstractEntity{
     @Column(name = "codeUser")
     private String code;
 
-    @Column(name = "nameUser")
+    @Column(name = "name")
     private String name;
 
     @Column(name = "email")

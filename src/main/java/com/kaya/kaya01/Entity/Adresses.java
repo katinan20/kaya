@@ -12,11 +12,8 @@ import lombok.*;
 @Embeddable
 public class Adresses {
 
-    @Column(name = "adresse1")
-    private String adresse1;
-
-    @Column(name = "adresse2")
-    private String adresse2;
+    @Column(name = "adresse")
+    private String adresse;
 
     @Column(name = "ville")
     private String ville;
@@ -26,4 +23,5 @@ public class Adresses {
 
     @Column(name = "pays")
     private String pays;
+
 }
