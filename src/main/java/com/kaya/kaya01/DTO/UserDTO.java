@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kaya.kaya01.Entity.User;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,7 +24,6 @@ public class UserDTO {
     @JsonProperty("email")
     private String email;
 
-
     @JsonProperty("adressesDTO")
     private AdressesDTO adressesDTO;
 
@@ -39,12 +35,6 @@ public class UserDTO {
 
     @JsonProperty("phoneNumber")
     private String phoneNumber;
-
-    @JsonProperty("search")
-    private SearchDTO search;
-
-    @JsonProperty("locations")
-    private List<LocationDTO> locations;
 
     public static UserDTO fromEntity(User user) {
         if (user == null) {
@@ -59,9 +49,6 @@ public class UserDTO {
                 .dateNaissance(user.getDateNaissance())
                 .password(user.getPassword())
                 .phoneNumber(user.getPhoneNumber())
-                .search(SearchDTO.fromEntity(user.getSearch()))
-                .locations(user.getLocations() == null ? null :
-                        user.getLocations().stream().map(LocationDTO::fromEntity).collect(Collectors.toList()))
                 .build();
     }
 
@@ -78,19 +65,8 @@ public class UserDTO {
         user.setDateNaissance(userDTO.getDateNaissance());
         user.setPassword(userDTO.getPassword());
         user.setPhoneNumber(userDTO.getPhoneNumber());
-        user.setSearch(SearchDTO.toEntity(userDTO.getSearch()));
-
-        if (userDTO.getLocations() != null) {
-            user.setLocations(userDTO.getLocations().stream().map(LocationDTO::toEntity).collect(Collectors.toList()));
-        } else {
-            user.setLocations(new ArrayList<>());
-        }
-
         return user;
     }
-
-
-
 
 
 }

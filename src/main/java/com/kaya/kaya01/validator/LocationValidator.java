@@ -13,6 +13,7 @@ public class LocationValidator {
         List<String> errores = new ArrayList<>();
 
         if (locationDTO == null ){
+
             errores.add("Veillez renseigner la date d Entrée");
             errores.add("Veillez renseigner la date de sortie");
             errores.add("Veillez renseigner le type de de location'");
@@ -25,7 +26,10 @@ public class LocationValidator {
         }
 
         if (locationDTO.getTypeLocation() == null){
-            errores.add("Veillez renseigner le type de location");
+            errores.add("le Champ le type de location est obligatoire");
+        }
+        if (!StringUtils.hasLength(locationDTO.getStatusPayement())){
+            errores.add("Veillez renseigner le statut de la transaction");
         }
         return errores;
     }

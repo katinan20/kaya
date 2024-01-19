@@ -51,4 +51,8 @@ public class Property  extends AbstractEntity{
     @OneToMany(mappedBy = "property")
     private List<Photos> photosList;
 
+    /*@PrePersist
+    public void prePersist() {
+        dateDeCreation = Date.now();
+    }*/
 }

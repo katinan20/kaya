@@ -30,11 +30,11 @@ public class LocationDTO  {
 
     private String statusPayement;
 
-    private UserDTO user;
+   // private UserDTO user;
 
-    private List<TransactionDTO> transactionList;
+   // private List<TransactionDTO> transactionList;
 
-    private PropertyDTO property;
+   // private PropertyDTO property;
 
     public static LocationDTO fromEntity(Location location){
         if (location == null){
