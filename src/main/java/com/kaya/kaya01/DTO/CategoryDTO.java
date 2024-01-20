@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 public class CategoryDTO  {
 
-    private Integer id;
+    private Long id;
 
     private String categorieName;
 

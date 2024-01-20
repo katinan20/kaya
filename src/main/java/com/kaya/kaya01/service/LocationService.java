@@ -6,10 +6,10 @@ import com.kaya.kaya01.DTO.UserDTO;
 import java.util.List;
 public interface LocationService {
     LocationDTO createLocation(LocationDTO locationDTO);
-    LocationDTO updateLocationById(Integer id,LocationDTO locationDTO);
-    LocationDTO findLocationById(Integer id);
+    LocationDTO updateLocationById(Long id,LocationDTO locationDTO);
+    LocationDTO findLocationById(Long id);
     LocationDTO findLocationByCode(String code);
     List<LocationDTO> findAllLocation();
-    void  deleteLocation(Integer id);
+    void  deleteLocation(Long id);
 
 }

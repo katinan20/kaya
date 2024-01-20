@@ -2,42 +2,53 @@ package com.kaya.kaya01.controller;
 
 import com.kaya.kaya01.DTO.UserDTO;
 import com.kaya.kaya01.controller.api.UserApi;
-import com.kaya.kaya01.service.serviceImp.UserServiceIpm;
+import com.kaya.kaya01.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-public class UserController  implements UserApi {
-    private UserServiceIpm userServiceIpm;
+public class UserController implements UserApi {
+
+    private final UserService userService;
+
     @Autowired
-    public UserController(UserServiceIpm userServiceIpmr){
-        this.userServiceIpm = userServiceIpmr;
-    }
-    @Override
-    public UserDTO createUser(UserDTO userDTO) {
-
-        return userServiceIpm.createUser(userDTO);
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
-    public UserDTO updateUserById(Integer id, UserDTO userDTO) {
-        return userServiceIpm.updateUserById(id,userDTO);
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+        UserDTO createdUser = userService.createUser(userDTO);
+        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
     @Override
-    public UserDTO findUserById(Integer id) {
-        return userServiceIpm.findUserById(id);
+    public ResponseEntity<UserDTO> updateUserById(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+        UserDTO updatedUser = userService.updateUserById(id, userDTO);
+        return ResponseEntity.ok(updatedUser);
     }
 
     @Override
-    public List<UserDTO> findAllUser() {
-        return userServiceIpm.findAllUser();
+    public ResponseEntity<UserDTO> findUserById(@PathVariable Long id) {
+        UserDTO user = userService.findUserById(id);
+        return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
     }
 
     @Override
-    public void deleteUser(Integer id) {
-        userServiceIpm.deleteUser(id);
+    public ResponseEntity<List<UserDTO>> findAllUser() {
+        List<UserDTO> userList = userService.findAllUser();
+        return ResponseEntity.ok(userList);
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 }

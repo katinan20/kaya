@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface PropertyService {
     PropertyDTO creatProperty(PropertyDTO propertyDTO);
-    PropertyDTO findProperTyById(Integer id);
+    PropertyDTO findProperTyById(Long id);
     List<PropertyDTO> findAllProperty();
-    PropertyDTO updatePropertyByIdAnd(Integer id, PropertyDTO propertyDTO);
-    void deletProperty(Integer id);
+    PropertyDTO updatePropertyByIdAnd(Long id, PropertyDTO propertyDTO);
+    void deletProperty(Long id);
 }

@@ -1,5 +1,7 @@
 package com.kaya.kaya01.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,37 +14,38 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Data
-@Table(name = "user_app")
-public class User  extends AbstractEntity{
+@Table(name = "users")
+public class User extends AbstractEntity {
 
-    @Column(name = "codeUser")
-    private String code;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "firstname")
+    private String firstname;
+
+    @Column(name = "lastname")
+    private String lastname;
 
     @Column(name = "email")
     private String email;
 
-    @Column(name = "adrese")
-    @Embedded // Utilisez @Embedded pour la classe intégrée Adresses
-    private Adresses adresse;
+    @JsonIgnoreProperties("user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Address> addresses;
 
-    @Column(name = "dateNaissance")
-    @Temporal(TemporalType.DATE) // Ajouté pour préciser le type de date
-    private Date dateNaissance;
+    @Column(name = "date_of_birth")
+    @Temporal(TemporalType.DATE)
+    private Date dateOfBirth;
 
-    @Column(name = "password")
-    private String password;
-
-    @Column(name = "phoneNumber")
+    @Column(name = "phone_number")
     private String phoneNumber;
 
-    @ManyToOne
-    private Search search;
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Search> search;
 
-    /////////////////////////
-
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Location> locations;
 }

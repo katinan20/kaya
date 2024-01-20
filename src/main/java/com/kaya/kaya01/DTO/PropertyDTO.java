@@ -1,74 +1,48 @@
 package com.kaya.kaya01.DTO;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kaya.kaya01.Entity.Property;
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 @Builder
 @Data
-public class PropertyDTO   {
+public class PropertyDTO {
 
-    private Integer id;
+    private Long id;
 
-    private String titre;
+    @JsonProperty("propertyType")
+    private PropertyTypeDTO propertyTypeDTO;
 
-    private String location;
+    @JsonProperty("numberOfBedrooms")
+    private int numberOfBedrooms;
 
-    private BigDecimal prix;
+    @JsonProperty("numberOfBathrooms")
+    private int numberOfBathrooms;
 
-    private String type;
+    @JsonProperty("areaInSquareMeters")
+    private double areaInSquareMeters;
 
-    private String size;
+    @JsonProperty("hasKitchen")
+    private boolean hasKitchen;
 
-    private String numberOfRooms;
+    @JsonProperty("hasWifi")
+    private boolean hasWifi;
 
+    @JsonProperty("address")
+    private AddressDTO addressDTO;
+
+    @JsonProperty("pricePerNight")
+    private double pricePerNight;
+
+    @JsonProperty("description")
     private String description;
 
-    private Date dateDeCreation;
-/*
-    private LocationDTO locat;
+    @JsonProperty("category")
+    private CategoryDTO categoryDTO;
 
-    private CategoryDTO category;
 
-    private List<PhotosDTO> photosList;*/
-
-    public static PropertyDTO fromEntity(Property property){
-        if (property == null){
-            return null;
-        }
-        return PropertyDTO.builder()
-                .id(property.getId())
-                .titre(property.getTitre())
-                .location(property.getLocation())
-                .prix(property.getPrix())
-                .type(property.getType())
-                .size(property.getSize())
-                .numberOfRooms(property.getNumberOfRooms())
-                .description(property.getDescription())
-                .dateDeCreation(property.getDateDeCreation())
-                .build();
-    }
-
-    public static Property toEntity(PropertyDTO propertyDTO){
-        if (propertyDTO == null){
-            return null;
-        }
-
-        Property property = new Property();
-        property.setId(propertyDTO.getId());
-        property.setTitre(propertyDTO.getTitre());
-        property.setLocation(propertyDTO.getLocation());
-        property.setPrix(propertyDTO.getPrix());
-        property.setSize(propertyDTO.getSize());
-        property.setType(propertyDTO.getType());
-        property.setNumberOfRooms(propertyDTO.getNumberOfRooms());
-        property.setDescription(propertyDTO.getDescription());
-        property.setDateDeCreation(property.getDateDeCreation());
-
-        return property;
-    }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 public class LocationDTO  {
 
-    private Integer id;
+    private Long id;
 
     private String codeLocat;
 

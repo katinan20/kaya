@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 public class SearchDTO {
 
-    private Integer id;
+    private Long id;
 
     private String location;
 
@@ -29,7 +29,7 @@ public class SearchDTO {
 
     private List<UserDTO> user;
 
-    public SearchDTO(@JsonProperty("id")Integer id,
+    public SearchDTO(@JsonProperty("id")Long id,
                      @JsonProperty("location")String location,
                      @JsonProperty("priceRangMin")BigDecimal priceRangMin,
                      @JsonProperty("priceRangMax")BigDecimal priceRangMax,

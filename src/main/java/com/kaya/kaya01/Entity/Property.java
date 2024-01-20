@@ -14,45 +14,73 @@ import java.util.List;
 @Builder
 @Data
 @Table(name = "property")
-public class Property  extends AbstractEntity{
-    @Column(name = "title")
-    private String titre;
+public class Property extends AbstractEntity{
 
-    @Column(name = "location")
-    private String location;
-
-    @Column(name = "price")
-    private BigDecimal prix;
-
-    @Column(name = "type")
-    private String type;
-
-    @Column(name = "size")
-    private String size;
-
-    @Column(name = "numberOfRooms")
-    private String numberOfRooms;
-
-    @Column(name = "description")
-    private String description;
-
-    @Column(name = "dateCreation")
-    private Date dateDeCreation;
-
-    ///////////////////////////
-
-    @OneToOne(mappedBy = "property")
-    private Location locat;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "idcategory")
+    @JoinColumn(name = "property_type_id")
+    private PropertyType propertyType;
+
+    @Column(name = "num_bedrooms")
+    private int numberOfBedrooms;
+
+    @Column(name = "num_bathrooms")
+    private int numberOfBathrooms;
+
+    @Column(name = "area_square_meters")
+    private double areaInSquareMeters;
+
+    @Column(name = "has_kitchen")
+    private boolean hasKitchen;
+
+    @Column(name = "has_wifi")
+    private boolean hasWifi;
+
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
+
+    @Column(name = "price_per_night")
+    private double pricePerNight;
+
+    @Column(name = "description", length = 1000)
+    private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
     private Category category;
 
     @OneToMany(mappedBy = "property")
-    private List<Photos> photosList;
+    private List<Reservation> reservations;
 
-    /*@PrePersist
-    public void prePersist() {
-        dateDeCreation = Date.now();
-    }*/
+    @OneToMany(mappedBy = "property")
+    private List<Review> reviews;
+
+    @ManyToOne
+    @JoinColumn(name = "host_id")
+    private User host;
+
+    @ManyToMany
+    @JoinTable(
+            name = "property_amenities",
+            joinColumns = @JoinColumn(name = "property_id"),
+            inverseJoinColumns = @JoinColumn(name = "amenity_id"))
+    private List<Amenity> amenities;
+
+    @ManyToMany
+    @JoinTable(
+            name = "property_advantages",
+            joinColumns = @JoinColumn(name = "property_id"),
+            inverseJoinColumns = @JoinColumn(name = "advantage_id"))
+    private List<Advantage> advantages;
+
+    @ManyToMany
+    @JoinTable(
+            name = "property_nearby_locations",
+            joinColumns = @JoinColumn(name = "property_id"),
+            inverseJoinColumns = @JoinColumn(name = "nearby_location_id"))
+    private List<NearbyLocation> nearbyLocations;
 }

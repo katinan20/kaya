@@ -4,7 +4,7 @@ import com.kaya.kaya01.DTO.LocationDTO;
 import com.kaya.kaya01.Entity.Location;
 import com.kaya.kaya01.exception.EntityNotFoundException;
 import com.kaya.kaya01.exception.ErrorCodes;
-import com.kaya.kaya01.exception.InvalideEntityException;
+import com.kaya.kaya01.exception.InvalidEntityException;
 import com.kaya.kaya01.repository.LocationRepository;
 import com.kaya.kaya01.repository.PropertyRepository;
 import com.kaya.kaya01.repository.UserRepository;
@@ -22,17 +22,11 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class LocationServiceImp implements LocationService {
-    private LocationRepository locationRepository;
-    private UserRepository userRepository;
-    private PropertyRepository propertyRepository;
+    private final LocationRepository locationRepository;
+
     @Autowired
-    public LocationServiceImp(LocationRepository locationRepository,
-                              UserRepository userRepository,
-                              PropertyRepository propertyRepository
-                             ) {
+    public LocationServiceImp(LocationRepository locationRepository) {
         this.locationRepository = locationRepository;
-        this.userRepository = userRepository;
-        this.propertyRepository = propertyRepository;
     }
 
     @Override
@@ -42,7 +36,7 @@ public class LocationServiceImp implements LocationService {
         // verifier si les champs sont remplit
         if (!errors.isEmpty()){
             log.error("location no valide {} ", locationDTO);
-            throw new InvalideEntityException("location non valide", ErrorCodes.LOCATION_NOT_FOUND, errors);
+            throw new InvalidEntityException("location non valide", ErrorCodes.LOCATION_NOT_FOUND, errors);
         }
 
         //verification de l'existance
@@ -58,17 +52,17 @@ public class LocationServiceImp implements LocationService {
     }
 
     @Override
-    public LocationDTO updateLocationById(Integer id, LocationDTO locationDTO) {
+    public LocationDTO updateLocationById(Long id, LocationDTO locationDTO) {
         if (id == null){
             log.error("l'ID n;existe pas dans la base de donnée");
-            throw new InvalideEntityException("L'ID de la Location ne doit pas etre null");
+            throw new InvalidEntityException("L'ID de la Location ne doit pas etre null");
         }
 
         // Valider le UserDTO avant la mise à jour
         List<String> errors = LocationValidator.validate(locationDTO);
         if (!errors.isEmpty()) {
             log.error("location invalide {}", locationDTO);
-            throw new InvalideEntityException("lalocation n'est pas valide", ErrorCodes.LOCATION_NOT_FOUND, errors);
+            throw new InvalidEntityException("lalocation n'est pas valide", ErrorCodes.LOCATION_NOT_FOUND, errors);
         }
 
         // rechercher l'utilisateur existant
@@ -93,7 +87,7 @@ public class LocationServiceImp implements LocationService {
     }
 
     @Override
-    public LocationDTO findLocationById(Integer id) {
+    public LocationDTO findLocationById(Long id) {
         if (id == null){
             log.error("L ID est null");
             return null;
@@ -131,7 +125,7 @@ public class LocationServiceImp implements LocationService {
     }
 
     @Override
-    public void deleteLocation(Integer id) {
+    public void deleteLocation(Long id) {
         if (id == null){
             log.error("L'ID est null");
             return;

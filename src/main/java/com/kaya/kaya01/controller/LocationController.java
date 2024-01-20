@@ -21,12 +21,12 @@ public class LocationController implements LocationApi {
     }
 
     @Override
-    public LocationDTO updateLocationById(Integer id, LocationDTO locationDTO) {
+    public LocationDTO updateLocationById(Long id, LocationDTO locationDTO) {
         return locationServiceImp.updateLocationById(id,locationDTO);
     }
 
     @Override
-    public LocationDTO findLocationById(Integer id) {
+    public LocationDTO findLocationById(Long id) {
         return locationServiceImp.findLocationById(id);
     }
 
@@ -41,7 +41,7 @@ public class LocationController implements LocationApi {
     }
 
     @Override
-    public void deleteLocation(Integer id) {
+    public void deleteLocation(Long id) {
         locationServiceImp.deleteLocation(id);
     }
 }

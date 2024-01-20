@@ -48,7 +48,7 @@ public interface PropertyApi {
             @ApiResponse(responseCode = "200", description = "L'objet Propriété est trouvé avec succès"),
             @ApiResponse(responseCode = "404", description = "Aucun objet proprieté trouvé ")
     })
-    PropertyDTO findProperTyById(@PathVariable("id") Integer id);
+    PropertyDTO findProperTyById(@PathVariable("id") Long id);
 
 
     @GetMapping(value = APP_ROOT+"/property/", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -79,7 +79,7 @@ public interface PropertyApi {
             @ApiResponse(responseCode = "200", description = "L'objet Propriété est Modifier avec succèss"),
             @ApiResponse(responseCode = "400", description = "La modification n'a pas été prise en compte  ")
     })
-    PropertyDTO updatePropertyByIdAnd(@PathVariable("id") Integer id,@RequestBody PropertyDTO propertyDTO);
+    PropertyDTO updatePropertyByIdAnd(@PathVariable("id") Long id,@RequestBody PropertyDTO propertyDTO);
 
     @DeleteMapping(value = APP_ROOT+"/property/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Supprimer une propriété", description = "Cette methode permet la Suppression d'une propriété ",
@@ -94,5 +94,5 @@ public interface PropertyApi {
             @ApiResponse(responseCode = "200", description = "L'objet Propriété est Supprimer avec succèss"),
             @ApiResponse(responseCode = "400", description = "La Suppression n'a pas été prise en compte  ")
     })
-    void deletProperty(@PathVariable Integer id);
+    void deletProperty(@PathVariable Long id);
 }

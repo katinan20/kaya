@@ -11,21 +11,21 @@ import java.time.Instant;
 public class AbstractEntity implements Serializable {
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
 
-    @Column(name = "creationDate", nullable = false)
-    private Instant creationDate;
+    @Column(name = "createdAt", nullable = false)
+    private Instant createdAt;
 
-    @Column(name = "lastMofiedDate")
-    private Instant lastMofiedDate;
+    @Column(name = "updateAt")
+    private Instant updateAt;
 
     @PrePersist
     public void prePersist() {
-        creationDate = Instant.now();
+        createdAt = Instant.now();
     }
     @PreUpdate
     void predate(){
-        lastMofiedDate = Instant.now();
+        createdAt = Instant.now();
     }
 
 }

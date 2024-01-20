@@ -28,7 +28,7 @@ public interface LocationApi {
             @ApiResponse(responseCode = "200", description = "mise ajour fait avec succès"),
             @ApiResponse(responseCode = "400", description = "la mise ajour à echoué")
     })
-    LocationDTO updateLocationById(@PathVariable("id") Integer id,@PathVariable("locationDTO") LocationDTO locationDTO);
+    LocationDTO updateLocationById(@PathVariable("id") Long id,@PathVariable("locationDTO") LocationDTO locationDTO);
 
     @GetMapping(value = APP_ROOT +"/location/{id]}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "trouver une location par ID", description = "cette methode permet de faire resortie la liste de location a parti de l'ID")
@@ -36,7 +36,7 @@ public interface LocationApi {
             @ApiResponse(responseCode = "200", description = "location trouvé  avec succès"),
             @ApiResponse(responseCode = "404", description = "l'ID n'exite pas")
     })
-    LocationDTO findLocationById(@PathVariable("id") Integer id);
+    LocationDTO findLocationById(@PathVariable("id") Long id);
     @GetMapping(value = APP_ROOT +"/location/{code]}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "trouver une location par son CODE", description = "cette methode permet de faire resortie la liste de location a parti du code")
     @ApiResponses(value = {
@@ -58,5 +58,5 @@ public interface LocationApi {
             @ApiResponse(responseCode = "200", description = "location supprimer avec succès"),
             @ApiResponse(responseCode = "404", description = "l'ID n'exite pas")
     })
-    void  deleteLocation(@PathVariable("id") Integer id);
+    void  deleteLocation(@PathVariable("id") Long id);
 }

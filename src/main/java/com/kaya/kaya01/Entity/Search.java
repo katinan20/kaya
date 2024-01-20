@@ -1,9 +1,6 @@
 package com.kaya.kaya01.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -33,7 +30,7 @@ public class Search extends AbstractEntity{
     @Column(name = "nomberOfRoome")
     private Integer nomberOfRoome;
 
-    ////////////////////
-    @OneToMany(mappedBy = "search")
-    private List<User> user;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

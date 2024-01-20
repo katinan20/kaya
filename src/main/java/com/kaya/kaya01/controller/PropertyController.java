@@ -21,7 +21,7 @@ public class PropertyController implements PropertyApi {
     }
 
     @Override
-    public PropertyDTO findProperTyById(Integer id) {
+    public PropertyDTO findProperTyById(Long id) {
         return propertyServiceImp.findProperTyById(id);
     }
 
@@ -31,12 +31,12 @@ public class PropertyController implements PropertyApi {
     }
 
     @Override
-    public PropertyDTO updatePropertyByIdAnd(Integer id, PropertyDTO propertyDTO) {
+    public PropertyDTO updatePropertyByIdAnd(Long id, PropertyDTO propertyDTO) {
         return propertyServiceImp.updatePropertyByIdAnd(id,propertyDTO);
     }
 
     @Override
-    public void deletProperty(Integer id) {
+    public void deletProperty(Long id) {
         propertyServiceImp.deletProperty(id);
     }
 }

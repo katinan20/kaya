@@ -8,7 +8,7 @@ import lombok.Data;
 @Builder
 public class PhotosDTO  {
 
-    private Integer id;
+    private Long id;
 
     private String url;
 
