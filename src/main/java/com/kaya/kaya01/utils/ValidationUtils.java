@@ -1,6 +1,5 @@
 package com.kaya.kaya01.utils;
 
-import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.kaya.kaya01.exception.PhoneNumberValidationException;
 

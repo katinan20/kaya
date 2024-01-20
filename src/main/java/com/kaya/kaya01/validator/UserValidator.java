@@ -1,13 +1,18 @@
 package com.kaya.kaya01.validator;
 
 import com.kaya.kaya01.DTO.AddressDTO;
+import com.kaya.kaya01.DTO.PhoneNumberDTO;
 import com.kaya.kaya01.DTO.UserDTO;
+import com.kaya.kaya01.Entity.PhoneNumber;
 import com.kaya.kaya01.repository.UserRepository;
+import com.kaya.kaya01.service.serviceImp.PhoneNumberImp;
 import com.kaya.kaya01.utils.ValidationUtils;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserValidator {
 
@@ -25,7 +30,7 @@ public class UserValidator {
         if (!StringUtils.hasLength(userDTO.getEmail()) || !ValidationUtils.isValidEmail(userDTO.getEmail())) {
             errors.add("Veuillez renseigner une adresse e-mail valide");
         }
-        if (!StringUtils.hasLength(userDTO.getPhoneNumber()) || !ValidationUtils.validatePhoneNumber(userDTO.getPhoneNumber())) {
+        if (CollectionUtils.isEmpty(userDTO.getPhoneNumber()) || !validatePhoneNumbers(userDTO.getPhoneNumber())) {
             errors.add("Veuillez renseigner un numéro de téléphone valide");
         }
         if (userDTO.getDateOfBirth() == null) {
@@ -40,18 +45,16 @@ public class UserValidator {
             }
         }
 
-        // Vérifier si l'utilisateur existe déjà
-        if (userRepository.findByEmailAndPhoneNumber(userDTO.getEmail(), userDTO.getPhoneNumber()).isPresent()) {
-            errors.add("Un utilisateur avec le même e-mail et numéro de téléphone existe déjà");
-        }
         if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
             errors.add("Un utilisateur avec cet email existe déjà");
         }
-        if (userRepository.findByPhoneNumber(userDTO.getPhoneNumber()).isPresent()) {
-            errors.add("Un utilisateur avec le numéro de téléphone existe déjà");
-        }
 
         return errors;
+    }
+
+    private static boolean validatePhoneNumbers(List<PhoneNumberDTO> phoneNumbers) {
+        return phoneNumbers.stream()
+                .allMatch(phoneNumberDTO -> StringUtils.hasLength(phoneNumberDTO.getPhone()) && ValidationUtils.validatePhoneNumber(phoneNumberDTO.getPhone()));
     }
 
     private static void validateAddress(AddressDTO address, String prefix, List<String> errors) {

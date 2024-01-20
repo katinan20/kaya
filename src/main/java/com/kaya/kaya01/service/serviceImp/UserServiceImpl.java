@@ -58,7 +58,12 @@ public class UserServiceImpl implements UserService {
             if (newUser.getAddresses() != null) {
                 newUser.getAddresses().forEach(address -> address.setUser(newUser));
             }
-
+            if (newUser.getPhoneNumber() != null) {
+                newUser.getPhoneNumber().forEach(phoneNumber -> {
+                    phoneNumber.setUser(newUser);
+                    phoneNumber.populatePhoneDetails();
+                });
+            }
             // Enregistre l'utilisateur avec les adresses associées
             return fromEntity(userRepository.save(newUser));
         } catch (InvalidEntityException | EntityNotFoundException e) {
@@ -108,8 +113,6 @@ public class UserServiceImpl implements UserService {
         userToUpdate.setLastname(userDTO.getLastname());
         userToUpdate.setEmail(userDTO.getEmail());
         userToUpdate.setDateOfBirth(userDTO.getDateOfBirth());
-        userToUpdate.setPhoneNumber(userDTO.getPhoneNumber());
-
         // Enregistre l'utilisateur mis à jour
         User updatedUser = userRepository.save(userToUpdate);
 

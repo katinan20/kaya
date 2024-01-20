@@ -38,8 +38,9 @@ public class User extends AbstractEntity {
     @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
+    @JsonIgnoreProperties("user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<PhoneNumber> phoneNumber;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

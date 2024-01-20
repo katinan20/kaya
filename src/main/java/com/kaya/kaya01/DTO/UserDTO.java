@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Setter
 @Builder
 public class UserDTO {
-//    @JsonProperty("firstname")
+    @JsonProperty("firstname")
     private String firstname;
 
     @JsonProperty("lastname")
@@ -27,7 +27,7 @@ public class UserDTO {
     private Date dateOfBirth;
 
     @JsonProperty("phoneNumber")
-    private String phoneNumber;
+    private List<PhoneNumberDTO> phoneNumber;
 
     @JsonProperty("addresses")  // Change from "address" to "addresses"
     private List<AddressDTO> addresses;

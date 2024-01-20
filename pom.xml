@@ -120,6 +120,13 @@
             <artifactId>libphonenumber</artifactId>
             <version>8.13.28</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.googlecode.libphonenumber/carrier -->
+        <dependency>
+            <groupId>com.googlecode.libphonenumber</groupId>
+            <artifactId>carrier</artifactId>
+            <version>1.212</version>
+        </dependency>
     </dependencies>
 
     <build>
