@@ -2,17 +2,34 @@ services:
   postgres:
     image: 'postgres:latest'
     environment:
-      - 'POSTGRES_DB=kaya_db'
-      - 'POSTGRES_PASSWORD=paulo123'
-      - 'POSTGRES_USER=kayaU'
+      - POSTGRES_DB=${POSTGRESDB_DATABASE}
+      - POSTGRES_PASSWORD=${POSTGRESDB_ROOT_PASSWORD}
+      - POSTGRES_USER=${POSTGRESDB_USER}
     ports:
-      - '5432'
+      - '${POSTGRESDB_LOCAL_PORT}:${POSTGRESDB_DOCKER_PORT}'
+    networks:
+      - kaya-network
+
   pgadmin:
     image: 'dpage/pgadmin4:latest'
     environment:
-      PGADMIN_DEFAULT_EMAIL: katine.toure95@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: 84564953kat@
-      PGADMIN_LISTEN_PORT: 5056
+      - 'PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}'
+      - 'PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}'
+      - 'PGADMIN_LISTEN_PORT=${PGADMIN_LISTEN_PORT}'
     ports:
-      - '5056:5056'
+      - '${PGADMIN_LISTEN_PORT}:${PGADMIN_LISTEN_PORT}'
+    networks:
+      - kaya-network
 
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}'
+    networks:
+      - kaya-network
+
+networks:
+  kaya-network:
+    driver: bridge

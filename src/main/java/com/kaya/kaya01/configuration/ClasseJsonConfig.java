@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 @Configuration
@@ -28,6 +30,16 @@ public class ClasseJsonConfig {
         // autres configurations...
         return objectMapper;
     }
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
+        String envFilePath = ".env"; // Update the path
+        configurer.setLocation(new FileSystemResource(envFilePath));
+        System.out.println("Loading .env file from: " + envFilePath); // Add this line
+        return configurer;
+    }
+
 
 
 
