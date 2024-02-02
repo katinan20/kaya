@@ -6,8 +6,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.apache.commons.lang3.Validate;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,84 +15,68 @@ import java.util.List;
 
 import static com.kaya.kaya01.utils.Constants.APP_ROOT;
 
-@Api(APP_ROOT+"/Property")
+@Tag(name = "Property API", description = "Operations related to properties")
+@Api(APP_ROOT + "/property")
+@SecurityRequirement(name = "apiKey")
+@RequestMapping(APP_ROOT + "/property")
 public interface PropertyApi {
-    @PostMapping(value = APP_ROOT+"/property/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Eregistrer une propriété", description = "Cette methode permet la creation d'une nouvelle propriété",
+
+    @PostMapping(value =  "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Save a property", description = "This method allows the creation or modification of a new property",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "L'objet Propriété est creer ou modifier",
+                            description = "Property object is created or modified",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = PropertyDTO.class))
                     ),
+                    @ApiResponse(responseCode = "400", description = "Property object not created or modified")
             })
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "L'objet Propriété est creer ou modifier"),
-            @ApiResponse(responseCode = "400", description = "L'objet proprieté non creer ou modifier")
-    })
-    PropertyDTO creatProperty(@RequestBody PropertyDTO propertyDTO);
+    PropertyDTO createProperty(@RequestBody PropertyDTO propertyDTO);
 
-
-
-
-    @GetMapping(value =APP_ROOT+ "/property/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Chercher une propriété", description = "Cette methode permet de chercher propriété par son ID",
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Find a property", description = "This method allows searching for a property by its ID",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "L'objet Propriété est trouvé",
+                            description = "Property object is found",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = PropertyDTO.class))
                     ),
+                    @ApiResponse(responseCode = "404", description = "No property object found ")
             })
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "L'objet Propriété est trouvé avec succès"),
-            @ApiResponse(responseCode = "404", description = "Aucun objet proprieté trouvé ")
-    })
-    PropertyDTO findProperTyById(@PathVariable("id") Long id);
+    PropertyDTO findPropertyById(@PathVariable("id") Long id);
 
-
-    @GetMapping(value = APP_ROOT+"/property/", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Voir toute les propriétés", description = "Cette methode permet l'affichage de toute les propriété ",
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "View all properties", description = "This method allows the display of all properties",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "la liste des propriétés",
+                            description = "List of properties",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = PropertyDTO.class))
                     ),
+                    @ApiResponse(responseCode = "204", description = "No properties found")
             })
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "La liste des propriétés"),
-    })
-    List<PropertyDTO> findAllProperty();
+    List<PropertyDTO> findAllProperties();
 
-
-    @PutMapping(value = APP_ROOT+"/property/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Modifier une propriété", description = "Cette methode permet de modifier propriété ",
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Update a property", description = "This method allows updating a property ",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "L'objet Propriété est Modifier avec succès",
+                            description = "Property object is updated successfully",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = PropertyDTO.class))
                     ),
+                    @ApiResponse(responseCode = "400", description = "Modification not taken into account")
             })
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "L'objet Propriété est Modifier avec succèss"),
-            @ApiResponse(responseCode = "400", description = "La modification n'a pas été prise en compte  ")
-    })
-    PropertyDTO updatePropertyByIdAnd(@PathVariable("id") Long id,@RequestBody PropertyDTO propertyDTO);
+    PropertyDTO updatePropertyById(@PathVariable("id") Long id, @RequestBody PropertyDTO propertyDTO);
 
-    @DeleteMapping(value = APP_ROOT+"/property/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Supprimer une propriété", description = "Cette methode permet la Suppression d'une propriété ",
+    @DeleteMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Delete a property", description = "This method allows the deletion of a property ",
             responses = {
                     @ApiResponse(
-                            responseCode = "200",
-                            description = "L'objet Propriété est Supprimer avec succès",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = PropertyDTO.class))
+                            responseCode = "204",
+                            description = "Property object is deleted successfully"
                     ),
+                    @ApiResponse(responseCode = "404", description = "No property found")
             })
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "L'objet Propriété est Supprimer avec succèss"),
-            @ApiResponse(responseCode = "400", description = "La Suppression n'a pas été prise en compte  ")
-    })
-    void deletProperty(@PathVariable Long id);
+    void deleteProperty(@PathVariable Long id);
 }
