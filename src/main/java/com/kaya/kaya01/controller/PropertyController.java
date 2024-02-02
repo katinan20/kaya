@@ -10,33 +10,33 @@ import java.util.List;
 
 @RestController
 public class PropertyController implements PropertyApi {
-    private PropertyServiceImp propertyServiceImp;
+    private final PropertyServiceImp propertyServiceImp;
     @Autowired
     public PropertyController(PropertyServiceImp propertyServiceImp){
         this.propertyServiceImp = propertyServiceImp;
     }
     @Override
-    public PropertyDTO creatProperty(PropertyDTO propertyDTO) {
+    public PropertyDTO createProperty(PropertyDTO propertyDTO) {
         return propertyServiceImp.creatProperty(propertyDTO);
     }
 
     @Override
-    public PropertyDTO findProperTyById(Long id) {
+    public PropertyDTO findPropertyById(Long id) {
         return propertyServiceImp.findProperTyById(id);
     }
 
     @Override
-    public List<PropertyDTO> findAllProperty() {
+    public List<PropertyDTO> findAllProperties() {
         return propertyServiceImp.findAllProperty();
     }
 
     @Override
-    public PropertyDTO updatePropertyByIdAnd(Long id, PropertyDTO propertyDTO) {
+    public PropertyDTO updatePropertyById(Long id, PropertyDTO propertyDTO) {
         return propertyServiceImp.updatePropertyByIdAnd(id,propertyDTO);
     }
 
     @Override
-    public void deletProperty(Long id) {
+    public void deleteProperty(Long id) {
         propertyServiceImp.deletProperty(id);
     }
 }

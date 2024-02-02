@@ -5,6 +5,8 @@ import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,51 +14,58 @@ import java.util.List;
 
 import static com.kaya.kaya01.utils.Constants.APP_ROOT;
 
-@Api(APP_ROOT+"/location")
+
+@Tag(name = "Property Location", description = "Operations related to locations")
+@Api(APP_ROOT + "/location")
+@SecurityRequirement(name = "apiKey")
+@RequestMapping(APP_ROOT + "/location")
 public interface LocationApi {
-    @PostMapping(value = APP_ROOT + "/location/creeate", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "creer une location", description = "Cette methode permet de faire un enregistrement de location")
+
+    @PostMapping(value ="/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Create a location", description = "This method allows the recording of a location")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Location enregistré avec succès"),
-            @ApiResponse(responseCode = "400", description = "echec de l'enregistrement")
+            @ApiResponse(responseCode = "200", description = "Location recorded successfully"),
+            @ApiResponse(responseCode = "400", description = "Recording failed")
     })
     LocationDTO createLocation(@RequestBody LocationDTO locationDTO);
 
-    @PutMapping(value = APP_ROOT +"/location/{id}/{locationDTO}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "modifier une location", description = "cette methode permet la modification d'une location a parti de l'ID")
+    @PutMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Update a location", description = "This method allows the modification of a location based on ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "mise ajour fait avec succès"),
-            @ApiResponse(responseCode = "400", description = "la mise ajour à echoué")
+            @ApiResponse(responseCode = "200", description = "Update done successfully"),
+            @ApiResponse(responseCode = "400", description = "Update failed")
     })
-    LocationDTO updateLocationById(@PathVariable("id") Long id,@PathVariable("locationDTO") LocationDTO locationDTO);
+    LocationDTO updateLocationById(@PathVariable("id") Long id, @RequestBody LocationDTO locationDTO);
 
-    @GetMapping(value = APP_ROOT +"/location/{id]}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "trouver une location par ID", description = "cette methode permet de faire resortie la liste de location a parti de l'ID")
+    @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Find a location by ID", description = "This method retrieves the list of locations based on the ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "location trouvé  avec succès"),
-            @ApiResponse(responseCode = "404", description = "l'ID n'exite pas")
+            @ApiResponse(responseCode = "200", description = "Location found successfully"),
+            @ApiResponse(responseCode = "404", description = "ID does not exist")
     })
     LocationDTO findLocationById(@PathVariable("id") Long id);
-    @GetMapping(value = APP_ROOT +"/location/{code]}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "trouver une location par son CODE", description = "cette methode permet de faire resortie la liste de location a parti du code")
+
+    @GetMapping(value = "{code}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Find a location by CODE", description = "This method retrieves the list of locations based on the code")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "location trouvé  avec succès"),
-            @ApiResponse(responseCode = "404", description = "le code n'exite pas")
+            @ApiResponse(responseCode = "200", description = "Location found successfully"),
+            @ApiResponse(responseCode = "404", description = "Code does not exist")
     })
     LocationDTO findLocationByCode(@PathVariable("code") String code);
-    @GetMapping(value = APP_ROOT +"/location/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Afficher la liste de location", description = "cette methode permet de faire resortie la liste de toute location ")
+
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Display the list of locations", description = "This method retrieves the list of all locations")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "location trouvé  avec succès"),
-            @ApiResponse(responseCode = "404", description = "Aucune liste de trouvé")
+            @ApiResponse(responseCode = "200", description = "Location list found successfully"),
+            @ApiResponse(responseCode = "404", description = "No list found")
     })
     List<LocationDTO> findAllLocation();
 
-    @DeleteMapping(value = APP_ROOT +"/location/{id]}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "supprimer une location", description = "cette methode permet de supprimer une location a parti de l'ID")
+    @DeleteMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Delete a location", description = "This method allows the deletion of a location based on ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "location supprimer avec succès"),
-            @ApiResponse(responseCode = "404", description = "l'ID n'exite pas")
+            @ApiResponse(responseCode = "200", description = "Location deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "ID does not exist")
     })
-    void  deleteLocation(@PathVariable("id") Long id);
+    void deleteLocation(@PathVariable("id") Long id);
 }
